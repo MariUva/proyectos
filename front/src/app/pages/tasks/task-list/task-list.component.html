@@ -1,17 +1,35 @@
 <div class="tasks-container">
-  <button (click)="goBack()">🔙 Volver a proyectos</button>
+  <button class="back-button" (click)="goBack()">🔙 Volver a proyectos</button>
 
   <h2>📌 Proyecto: {{ project.name }}</h2>
   <p>{{ project.description }}</p>
   <p>🧭 Estado: <strong>{{ project.state }}</strong></p>
 
   <!-- Formulario -->
-  <form *ngIf="canCreateTask()" (ngSubmit)="saveTask()" #taskForm="ngForm">
-    <input type="text" placeholder="Título" [(ngModel)]="newTask.title" name="title" required />
-    <textarea placeholder="Descripción" [(ngModel)]="newTask.description" name="description" required></textarea>
+  <form
+    *ngIf="canCreateTask()"
+    (ngSubmit)="saveTask()"
+    #taskForm="ngForm"
+    class="task-form"
+  >
+    <input
+      type="text"
+      placeholder="Título de la tarea"
+      [(ngModel)]="newTask.title"
+      name="title"
+      required
+    />
+    <textarea
+      placeholder="Descripción detallada"
+      [(ngModel)]="newTask.description"
+      name="description"
+      required
+    ></textarea>
 
-    <div>
-      <button type="submit">💾 {{ newTask.id ? 'Actualizar' : 'Crear' }}</button>
+    <div class="form-buttons">
+      <button type="submit" [disabled]="!newTask.title || !newTask.description">
+        💾 {{ newTask.id ? 'Actualizar' : 'Crear' }}
+      </button>
       <button type="button" (click)="resetForm()">❌ Limpiar</button>
     </div>
   </form>
@@ -22,15 +40,16 @@
       <h3>{{ estado }}</h3>
       <ul>
         <li *ngFor="let t of getTasksByState(estado)">
-          <strong>{{ t.title }}</strong><br />
-          <small>{{ t.description }}</small><br /><br />
+          <strong>{{ t.title }}</strong>
+          <small>{{ t.description }}</small>
 
           <label>
             Estado:
             <select
               [disabled]="!canEditTask() || project.state === 'PENDIENTE'"
               [ngModel]="t.state"
-              (ngModelChange)="onChangeTaskState(t, $event)">
+              (ngModelChange)="onChangeTaskState(t, $event)"
+            >
               <option *ngFor="let s of taskStates" [value]="s">{{ s }}</option>
             </select>
           </label>
