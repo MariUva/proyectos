@@ -1,0 +1,22 @@
+<div class="login-container">
+  <h2>Iniciar sesión</h2>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <label>Correo electrónico</label>
+    <input type="email" formControlName="email" placeholder="ejemplo@correo.com">
+    <div class="error" *ngIf="isInvalid('email')">
+      <small *ngIf="form.get('email')?.errors?.['required']">El correo es obligatorio.</small>
+      <small *ngIf="form.get('email')?.errors?.['email']">Debe tener formato válido.</small>
+    </div>
+
+    <label>Contraseña</label>
+    <input type="password" formControlName="password" placeholder="Tu contraseña">
+    <div class="error" *ngIf="isInvalid('password')">
+      <small>La contraseña es obligatoria.</small>
+    </div>
+
+    <button type="submit" [disabled]="form.invalid">Entrar</button>
+  </form>
+
+  <app-loading-overlay></app-loading-overlay>
+</div>

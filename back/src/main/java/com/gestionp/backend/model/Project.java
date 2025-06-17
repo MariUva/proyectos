@@ -1,10 +1,21 @@
 package com.gestionp.backend.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+
 import java.util.List;
 
-@Entity
+@Getter
+@Setter
 @Table(name = "projects")
+@SuperBuilder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
 public class Project {
 
     @Id
@@ -14,6 +25,9 @@ public class Project {
     private String name;
     private String description;
 
+    @Enumerated(EnumType.STRING)
+    private State state;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -21,19 +35,4 @@ public class Project {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks;
 
-    // Getters y Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
-
-    public List<Task> getTasks() { return tasks; }
-    public void setTasks(List<Task> tasks) { this.tasks = tasks; }
 }

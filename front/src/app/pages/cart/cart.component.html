@@ -1,0 +1,41 @@
+<div class="cart-container">
+  <h2>🛒 Mi carrito</h2>
+
+  <div *ngIf="cartItems.length === 0" class="empty-cart">
+    <p>No tienes productos en el carrito.</p>
+  </div>
+
+  <div *ngIf="cartItems.length > 0" class="cart-table">
+    <div class="cart-header">
+      <span>Producto</span>
+      <span>Cantidad</span>
+      <span>Precio</span>
+      <span>Subtotal</span>
+      <span>Acciones</span>
+    </div>
+
+    <div *ngFor="let item of cartItems" class="cart-row">
+      <span>{{ item.product.nombre }}</span>
+      <span>{{ item.quantity }}</span>
+      <span>${{ item.product.precio | number: '1.0-0' }}</span>
+      <span>${{ item.product.precio * item.quantity | number: '1.0-0' }}</span>
+      <span>
+        <button class="edit-btn" (click)="changeQuantity(item)">✏️</button>
+        <button class="delete-btn" (click)="removeItem(item.id)">❌</button>
+      </span>
+    </div>
+
+    <div class="cart-total">
+      <strong>Total:</strong>
+      <span>${{ total | number: '1.0-0' }}</span>
+    </div>
+
+    <button class="clear-btn" (click)="clearCart()">🗑️ Vaciar carrito</button>
+  </div>
+  <button
+    *ngIf="cartItems.length > 0"
+    class="pay-btn"
+    (click)="checkout()">
+    💳 Finalizar compra
+  </button>
+</div>

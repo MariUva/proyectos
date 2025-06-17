@@ -1,0 +1,26 @@
+<nav class="navbar">
+  <div class="navbar-left">
+    <a routerLink="/" class="logo">🛍️ Mi Tienda</a>
+  </div>
+
+  <div class="navbar-right">
+    <ng-container *ngIf="!isLoggedIn">
+      <a routerLink="/login">Iniciar sesión</a>
+      <a routerLink="/register">Registrarse</a>
+    </ng-container>
+
+    <ng-container *ngIf="isLoggedIn">
+      <a *ngIf="isAdmin" routerLink="/admin/products">Administrar productos</a>
+
+      <ng-container *ngIf="isUser">
+        <a routerLink="/cart">
+          🛒 Carrito
+          <span *ngIf="cartCount > 0">({{ cartCount }})</span>
+        </a>
+        <a routerLink="/orders">Mis compras</a>
+      </ng-container>
+
+      <a (click)="logout()" style="cursor: pointer;">Cerrar sesión</a>
+    </ng-container>
+  </div>
+</nav>

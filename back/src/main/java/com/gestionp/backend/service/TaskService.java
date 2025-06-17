@@ -2,6 +2,7 @@ package com.gestionp.backend.service;
 
 import com.gestionp.backend.dto.TaskDTO;
 import com.gestionp.backend.model.Project;
+import com.gestionp.backend.model.State;
 import com.gestionp.backend.model.Task;
 import com.gestionp.backend.model.User;
 import com.gestionp.backend.repository.ProjectRepository;
@@ -40,6 +41,11 @@ public class TaskService {
 
     public TaskDTO createTask(TaskDTO dto) {
         Project project = getUserProject(dto.getProjectId());
+
+        if (project.getState() == State.CANCELADO || project.getState() == State.TERMINADO) {
+            throw new IllegalStateException("No se pueden crear tareas en un proyecto cancelado o terminado");
+        }
+
         Task task = new Task();
         task.setTitle(dto.getTitle());
         task.setDescription(dto.getDescription());
@@ -53,8 +59,13 @@ public class TaskService {
                 .orElseThrow(() -> new EntityNotFoundException("Tarea no encontrada"));
 
         Project project = getUserProject(dto.getProjectId());
+
         if (!task.getProject().getId().equals(project.getId())) {
             throw new EntityNotFoundException("No autorizado para editar esta tarea");
+        }
+
+        if (project.getState() == State.CANCELADO || project.getState() == State.TERMINADO) {
+            throw new IllegalStateException("No se pueden modificar tareas en un proyecto cancelado o terminado");
         }
 
         task.setTitle(dto.getTitle());
@@ -68,9 +79,16 @@ public class TaskService {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Tarea no encontrada"));
         Project project = getUserProject(task.getProject().getId());
+
         if (!task.getProject().getId().equals(project.getId())) {
             throw new EntityNotFoundException("No autorizado para eliminar esta tarea");
         }
+
+        // Validación de estado del proyecto
+        if (project.getState() == State.CANCELADO || project.getState() == State.TERMINADO) {
+            throw new IllegalStateException("No se pueden eliminar tareas de un proyecto cancelado o terminado");
+        }
+
         taskRepository.delete(task);
     }
 

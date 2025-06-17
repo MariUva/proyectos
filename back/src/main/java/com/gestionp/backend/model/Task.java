@@ -1,9 +1,19 @@
 package com.gestionp.backend.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-@Entity
+@Getter
+@Setter
 @Table(name = "tasks")
+@SuperBuilder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
 public class Task {
 
     @Id
@@ -18,20 +28,7 @@ public class Task {
     @JoinColumn(name = "project_id")
     private Project project;
 
-    // Getters y Setters
+    @Enumerated(EnumType.STRING)
+    private State state;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
-
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-
-    public boolean isCompleted() { return completed; }
-    public void setCompleted(boolean completed) { this.completed = completed; }
-
-    public Project getProject() { return project; }
-    public void setProject(Project project) { this.project = project; }
-}
+  }

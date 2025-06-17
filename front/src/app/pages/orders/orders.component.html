@@ -1,0 +1,48 @@
+<div class="orders-container">
+  <h2>🧾 Historial de Compras</h2>
+
+  <div *ngIf="loading" class="loading">
+    <p>Cargando historial de pedidos...</p>
+  </div>
+
+  <div *ngIf="!loading && orders.length === 0" class="empty">
+    <p>No tienes compras registradas aún.</p>
+  </div>
+
+  <div *ngIf="!loading && orders.length > 0">
+    <div *ngFor="let order of paginatedOrders" class="order-card">
+      <div class="order-header">
+        <span>🗓 Fecha: {{ order.createdAt | date: 'dd/MM/yyyy HH:mm' }}</span>
+        <span>💰 Total: ${{ order.total | number: '1.0-0' }}</span>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of order.items">
+            <td>{{ item.product.nombre }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>${{ item.price | number: '1.0-0' }}</td>
+            <td>${{ item.price * item.quantity | number: '1.0-0' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination-controls" *ngIf="totalPages() > 1">
+      <button
+        *ngFor="let page of getPageArray()"
+        [disabled]="currentPage === page"
+        (click)="goToPage(page)">
+        {{ page }}
+      </button>
+    </div>
+  </div>
+</div>
