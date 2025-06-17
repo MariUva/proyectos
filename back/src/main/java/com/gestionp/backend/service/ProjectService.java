@@ -28,6 +28,16 @@ public class ProjectService {
                 .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
     }
 
+    public ProjectDTO getProjectById(Long id) {
+        User user = getAuthenticatedUser();
+
+        Project project = projectRepository.findById(id)
+                .filter(p -> p.getUser().getId().equals(user.getId()))
+                .orElseThrow(() -> new EntityNotFoundException("Proyecto no encontrado o no autorizado"));
+
+        return mapToDTO(project);
+    }
+
     public List<ProjectDTO> getAllProjectsForUser() {
         User user = getAuthenticatedUser();
         return projectRepository.findByUserId(user.getId()).stream()
@@ -41,6 +51,7 @@ public class ProjectService {
         project.setName(dto.getName());
         project.setDescription(dto.getDescription());
         project.setUser(user);
+        project.setState(dto.getState());
         return mapToDTO(projectRepository.save(project));
     }
 
@@ -51,6 +62,7 @@ public class ProjectService {
                 .orElseThrow(() -> new EntityNotFoundException("Proyecto no encontrado o no autorizado"));
         project.setName(dto.getName());
         project.setDescription(dto.getDescription());
+        project.setState(dto.getState());
         return mapToDTO(projectRepository.save(project));
     }
 
@@ -67,6 +79,7 @@ public class ProjectService {
         dto.setId(project.getId());
         dto.setName(project.getName());
         dto.setDescription(project.getDescription());
+        dto.setState(project.getState());
         return dto;
     }
 }

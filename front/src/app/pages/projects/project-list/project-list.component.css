@@ -1,0 +1,104 @@
+.projects-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.new-project-btn {
+  padding: 8px 16px;
+  background-color: #38a169;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: 0.2s ease-in-out;
+}
+
+.new-project-btn:hover {
+  background-color: #2f855a;
+}
+
+.projects-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.projects-table th,
+.projects-table td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.projects-table th {
+  background-color: #f7fafc;
+}
+
+.btn {
+  padding: 6px 12px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn.edit {
+  background-color: #3182ce;
+  color: white;
+}
+
+.btn.edit:hover {
+  background-color: #2b6cb0;
+}
+
+.btn.delete {
+  background-color: #e53e3e;
+  color: white;
+}
+
+.btn.delete:hover {
+  background-color: #c53030;
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: white;
+}
+
+.badge.pendiente {
+  background-color: #ecc94b;
+  color: black;
+}
+
+.badge.en_curso {
+  background-color: #4299e1;
+}
+
+.badge.cancelado {
+  background-color: #e53e3e;
+}
+
+.badge.terminado {
+  background-color: #38a169;
+}

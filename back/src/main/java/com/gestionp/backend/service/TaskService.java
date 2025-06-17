@@ -50,6 +50,7 @@ public class TaskService {
         task.setTitle(dto.getTitle());
         task.setDescription(dto.getDescription());
         task.setCompleted(dto.isCompleted());
+        task.setState(dto.getState());
         task.setProject(project);
         return mapToDTO(taskRepository.save(task));
     }
@@ -71,7 +72,7 @@ public class TaskService {
         task.setTitle(dto.getTitle());
         task.setDescription(dto.getDescription());
         task.setCompleted(dto.isCompleted());
-
+        task.setState(dto.getState());
         return mapToDTO(taskRepository.save(task));
     }
 
@@ -84,7 +85,6 @@ public class TaskService {
             throw new EntityNotFoundException("No autorizado para eliminar esta tarea");
         }
 
-        // Validación de estado del proyecto
         if (project.getState() == State.CANCELADO || project.getState() == State.TERMINADO) {
             throw new IllegalStateException("No se pueden eliminar tareas de un proyecto cancelado o terminado");
         }
@@ -104,6 +104,7 @@ public class TaskService {
         dto.setId(task.getId());
         dto.setTitle(task.getTitle());
         dto.setDescription(task.getDescription());
+        dto.setState(task.getState());
         dto.setCompleted(task.isCompleted());
         dto.setProjectId(task.getProject().getId());
         return dto;

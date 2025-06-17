@@ -46,11 +46,7 @@ export class LoginComponent {
           confirmButtonText: 'Continuar'
         }).then(() => {
           const role = this.auth.getUserRole();
-          if (role === 'ADMIN') {
-            this.router.navigate(['/admin/products']);
-          } else {
-            this.router.navigate(['/']);
-          }
+          this.router.navigate(['/projects']);
         });
       },
       error: err => {

@@ -1,5 +1,6 @@
 package com.gestionp.backend.service;
 
+import com.gestionp.backend.model.Role;
 import com.gestionp.backend.model.User;
 import com.gestionp.backend.repository.UserRepository;
 import com.gestionp.backend.security.JwtUtil;
@@ -34,6 +35,7 @@ public class AuthService {
         var user = User.builder()
                 .password(passwordEncoder.encode(request.password()))
                 .email(request.email())
+                .role(Role.USER)
                 .build();
 
         userRepo.save(user);

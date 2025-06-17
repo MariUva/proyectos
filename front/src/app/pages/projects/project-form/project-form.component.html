@@ -1,0 +1,43 @@
+<div class="form-container">
+  <h2>{{ isEditMode ? '✏️ Editar Proyecto' : '➕ Crear Proyecto' }}</h2>
+
+  <form (ngSubmit)="save()" #form="ngForm" novalidate>
+    <label for="name">Nombre del Proyecto:</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      [(ngModel)]="project.name"
+      required
+      minlength="3"
+    />
+
+    <label for="description">Descripción:</label>
+    <textarea
+      id="description"
+      name="description"
+      [(ngModel)]="project.description"
+      required
+    ></textarea>
+
+    <label for="state">Estado:</label>
+    <select
+      id="state"
+      name="state"
+      [(ngModel)]="project.state"
+      required
+    >
+      <option value="PENDIENTE">Pendiente</option>
+      <option value="EN_CURSO">En curso</option>
+      <option value="CANCELADO">Cancelado</option>
+      <option value="TERMINADO">Terminado</option>
+    </select>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="form.invalid">
+        {{ isEditMode ? '💾 Actualizar' : '✅ Crear' }}
+      </button>
+      <button type="button" (click)="cancel()">🔙 Cancelar</button>
+    </div>
+  </form>
+</div>

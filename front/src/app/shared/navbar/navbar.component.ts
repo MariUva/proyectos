@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../auth/auth.service';
-import { CartStateService } from '../../services/cart-state.service';
 
 @Component({
   selector: 'app-navbar',
@@ -17,16 +16,13 @@ export class NavbarComponent {
   constructor(
     public auth: AuthService,
     private router: Router,
-    private cartState: CartStateService
   ) {
-    this.cartState.totalItems$.subscribe(count => {
-      this.cartCount = count;
-    });
+
   }
 
   logout(): void {
     this.auth.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
   get isLoggedIn(): boolean {
@@ -40,4 +36,15 @@ export class NavbarComponent {
   get isUser(): boolean {
     return this.auth.getUserRole() === 'USER';
   }
+
+  goToHomeOrDashboard(event: Event): void {
+    event.preventDefault();
+
+    if (this.isLoggedIn) {
+      this.router.navigate(['/projects']);
+    } else {
+      this.router.navigate(['/']);
+    }
+  }
+
 }

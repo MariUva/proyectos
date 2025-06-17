@@ -49,7 +49,7 @@ export class RegisterComponent {
           text: 'La cuenta se ha creado correctamente',
           confirmButtonText: 'Ir al login'
         }).then(() => {
-          this.router.navigate(['/login']);
+          this.router.navigate(['/']);
         });
       },
       error: err => {

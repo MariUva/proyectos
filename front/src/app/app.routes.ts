@@ -1,14 +1,13 @@
 // src/app/app.routes.ts
 import { Routes } from '@angular/router';
-import { ProductListComponent } from './pages/product-list/product-list.component';
-import { ProductAdminComponent } from './pages/admin/product-admin.component';
 import { RoleGuard } from './auth/role.guard';
+import { ProjectListComponent } from './pages/projects/project-list/project-list.component';
+import { ProjectFormComponent } from './pages/projects/project-form/project-form.component';
+import { AuthGuard } from './auth/auth.guard';
 
 export const appRoutes: Routes = [
-  { path: '', component: ProductListComponent },
-
   {
-    path: 'login',
+    path: '',
     loadComponent: () =>
       import('./auth/login/login.component').then((m) => m.LoginComponent),
   },
@@ -18,23 +17,17 @@ export const appRoutes: Routes = [
       import('./auth/register/register.component').then((m) => m.RegisterComponent),
   },
   {
-    path: 'admin/products',
-    component: ProductAdminComponent,
-    canActivate: [RoleGuard],
-    data: { role: 'ADMIN' }
+    path: 'projects',
+    canActivateChild: [AuthGuard],
+    children: [
+      { path: '', component: ProjectListComponent },
+      { path: 'new', component: ProjectFormComponent },
+      { path: 'edit/:id', component: ProjectFormComponent },
+    ],
   },
   {
-    path: 'cart',
-    loadComponent: () =>
-      import('./pages/cart/cart.component').then((m) => m.CartComponent),
-    canActivate: [RoleGuard],
-    data: { role: 'USER' },
-  },
-  {
-    path: 'orders',
-    loadComponent: () =>
-      import('./pages/orders/orders.component').then((m) => m.OrdersComponent),
-    canActivate: [RoleGuard],
-    data: { role: 'USER' },
-  }
+  path: 'projects/:id/tasks',
+  loadComponent: () =>
+    import('./pages/tasks/task-list/task-list.component').then(m => m.TaskListComponent),
+}
 ];
