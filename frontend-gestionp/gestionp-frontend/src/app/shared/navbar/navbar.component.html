@@ -1,0 +1,26 @@
+<nav class="navbar">
+  <div class="logo">
+    <a routerLink="/">🧠 GestorProyectos</a>
+  </div>
+
+  <ul class="nav-links">
+    <li *ngIf="!isAuthenticated()">
+      <a routerLink="/auth/login">Iniciar sesión</a>
+    </li>
+    <li *ngIf="!isAuthenticated()">
+      <a routerLink="/auth/register">Registrarse</a>
+    </li>
+
+    <li *ngIf="isAuthenticated()">
+      <a routerLink="/dashboard">Mis Proyectos</a>
+    </li>
+
+    <li *ngIf="isAuthenticated()">
+      Bienvenido, <strong>{{ getUsername() }}</strong>
+    </li>
+
+    <li *ngIf="isAuthenticated()">
+      <a href="#" (click)="logout()">Cerrar sesión</a>
+    </li>
+  </ul>
+</nav>
