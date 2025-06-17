@@ -1,9 +1,7 @@
 package com.gestionp.backend.controller;
 
+import com.gestionp.backend.dto.*;
 import com.gestionp.backend.service.AuthService;
-import com.gestionp.backend.dto.AuthRequest;
-import com.gestionp.backend.dto.AuthResponse;
-import com.gestionp.backend.dto.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,4 +22,6 @@ public class AuthController {
     public AuthResponse register(@RequestBody RegisterRequest request) {
         return authService.register(request);
     }
+
+
 }

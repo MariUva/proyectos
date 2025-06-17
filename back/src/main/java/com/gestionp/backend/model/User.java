@@ -1,9 +1,10 @@
 package com.gestionp.backend.model;
 
+import com.gestionp.backend.model.Role;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
@@ -15,20 +16,17 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class User implements UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String email;
-
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Project> projects;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    // Implementación requerida por UserDetails
+    @Column(unique = true, nullable = false)
+    private String email;
 
     @Override
     public String getUsername() {
@@ -37,7 +35,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(); // Vacío porque no manejas roles
+        return List.of();
     }
 
     @Override
